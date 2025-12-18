@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-concepts/http-lifecycle" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.9.2">
+<title data-rh="true">HTTP 요청과 응답의 흐름 | webserv-docs</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://daeunki2.github.io/webserv_doc/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://daeunki2.github.io/webserv_doc/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="https://daeunki2.github.io/webserv_doc/docs/concepts/http-lifecycle"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="HTTP 요청과 응답의 흐름 | webserv-docs"><meta data-rh="true" name="description" content="하나의 요청은 어디서 시작되는가"><meta data-rh="true" property="og:description" content="하나의 요청은 어디서 시작되는가"><link data-rh="true" rel="icon" href="/webserv_doc/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://daeunki2.github.io/webserv_doc/docs/concepts/http-lifecycle"><link data-rh="true" rel="alternate" href="https://daeunki2.github.io/webserv_doc/docs/concepts/http-lifecycle" hreflang="en"><link data-rh="true" rel="alternate" href="https://daeunki2.github.io/webserv_doc/docs/concepts/http-lifecycle" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"HTTP 요청과 응답의 흐름","item":"https://daeunki2.github.io/webserv_doc/docs/concepts/http-lifecycle"}]}</script><link rel="stylesheet" href="/webserv_doc/assets/css/styles.1f9e8c33.css">
+<script src="/webserv_doc/assets/js/runtime~main.d85cce51.js" defer="defer"></script>
+<script src="/webserv_doc/assets/js/main.3bde57a8.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<svg style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><link rel="preload" as="image" href="/webserv_doc/img/logo.svg"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/webserv_doc/"><div class="navbar__logo"><img src="/webserv_doc/img/logo.svg" alt="webserv logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/webserv_doc/img/logo.svg" alt="webserv logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">webserv</b></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/webserv_doc/docs/intro/dont_panic">Docs</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href="https://github.com/daeunki2/webserv" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/webserv_doc/docs/intro/dont_panic"><span title="Intro" class="categoryLinkLabel_W154">Intro</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role="button" aria-expanded="true" href="/webserv_doc/docs/concepts/what-is-an-event-loop"><span title="Concepts" class="categoryLinkLabel_W154">Concepts</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/webserv_doc/docs/concepts/what-is-an-event-loop"><span title="이벤트 루프란 무엇인가" class="linkLabel_WmDU">이벤트 루프란 무엇인가</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/webserv_doc/docs/concepts/poll-vs-select"><span title="poll과 select는 무엇이 다른가" class="linkLabel_WmDU">poll과 select는 무엇이 다른가</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/webserv_doc/docs/concepts/http-lifecycle"><span title="HTTP 요청과 응답의 흐름" class="linkLabel_WmDU">HTTP 요청과 응답의 흐름</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/webserv_doc/docs/concepts/cgi-basics"><span title="CGI란 무엇인가" class="linkLabel_WmDU">CGI란 무엇인가</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/webserv_doc/docs/architecture/global-overview"><span title="Architecture" class="categoryLinkLabel_W154">Architecture</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/webserv_doc/docs/deep-dive/why-cgi-fd-in-poll"><span title="Deep Dive" class="categoryLinkLabel_W154">Deep Dive</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/webserv_doc/docs/testing/curl-strategy"><span title="Testing" class="categoryLinkLabel_W154">Testing</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/webserv_doc/docs/evaluation/questions-i-can-answer"><span title="Evaluation" class="categoryLinkLabel_W154">Evaluation</span></a></div></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/webserv_doc/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><span class="breadcrumbs__link">Concepts</span></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">HTTP 요청과 응답의 흐름</span></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>HTTP 요청과 응답의 흐름</h1></header>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="하나의-요청은-어디서-시작되는가">하나의 요청은 어디서 시작되는가<a href="#하나의-요청은-어디서-시작되는가" class="hash-link" aria-label="Direct link to 하나의 요청은 어디서 시작되는가" title="Direct link to 하나의 요청은 어디서 시작되는가" translate="no">​</a></h2>
+<p>HTTP 요청은
+사용자가 브라우저에서 주소를 입력하거나,
+버튼을 클릭하는 순간 시작된다.
+하지만 서버의 관점에서 보면
+이 행동은 곧바로 “화면 요청”이 아니라,
+<strong>하나의 메시지 생성</strong>에 가깝다.</p>
+<p>클라이언트는
+자신이 원하는 동작을
+정해진 형식의 요청으로 만들어
+서버로 전송한다.
+HTTP는 바로 이 요청 메시지의
+형식을 정의한 규약이다.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="서버에-도착한-요청은-바로-처리되지-않는다">서버에 도착한 요청은 바로 처리되지 않는다<a href="#서버에-도착한-요청은-바로-처리되지-않는다" class="hash-link" aria-label="Direct link to 서버에 도착한 요청은 바로 처리되지 않는다" title="Direct link to 서버에 도착한 요청은 바로 처리되지 않는다" translate="no">​</a></h2>
+<p>요청이 서버에 도착했다고 해서,
+곧바로 로직 처리가 시작되는 것은 아니다.</p>
+<p>서버는 먼저
+이 요청이 안전한지,
+그리고 HTTP 규격에 맞게 작성되었는지를 확인한다.
+과거에는 통신 장비나 시스템마다
+서로 다른 형식을 사용했지만,
+오늘날 웹에서는
+HTTP라는 공통 규격을 사용한다.</p>
+<p>또한 HTTP는
+버전에 따라 동작 방식이 다를 수 있기 때문에,
+서버는 요청을 처리하기 전에
+요청의 형식과 버전을 정확히 확인해야 한다.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="요청을-읽는다는-것의-의미">요청을 읽는다는 것의 의미<a href="#요청을-읽는다는-것의-의미" class="hash-link" aria-label="Direct link to 요청을 읽는다는 것의 의미" title="Direct link to 요청을 읽는다는 것의 의미" translate="no">​</a></h2>
+<p>HTTP 요청은
+단순한 문자열이 아니라,
+구조를 가진 메시지이다.</p>
+<p>일반적인 요청은 다음과 같은 형태를 가진다.</p>
+<ul>
+<li class="">요청 라인 (method, URI, version)</li>
+<li class="">헤더(header)</li>
+<li class="">본문(body)</li>
+</ul>
+<p>사람의 언어에 문법이 있듯,
+HTTP에도 반드시 지켜야 할 규칙이 있다.
+서버는 요청을 “받는 것”에서 끝나지 않고,
+이 구조를 하나씩 해석하며
+어떤 요청인지 이해해야 한다.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="요청이-완성되었다는-판단">요청이 완성되었다는 판단<a href="#요청이-완성되었다는-판단" class="hash-link" aria-label="Direct link to 요청이 완성되었다는 판단" title="Direct link to 요청이 완성되었다는 판단" translate="no">​</a></h2>
+<p>서버는 요청을 읽는 동안,
+“이 요청이 언제 끝났는지”를 판단해야 한다.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="http의-간단한-규칙">HTTP의 간단한 규칙<a href="#http의-간단한-규칙" class="hash-link" aria-label="Direct link to HTTP의 간단한 규칙" title="Direct link to HTTP의 간단한 규칙" translate="no">​</a></h2>
+<p>HTTP는 사람이 읽을 수 있는 텍스트 기반 프로토콜이며,
+몇 가지 기본적인 규칙 위에서 동작한다.
+이 문서에서는 webserv를 이해하는 데
+필요한 최소한의 규칙만 다룬다.</p>
+<ol>
+<li class="">
+<p><strong>요청과 응답은 모두 텍스트로 이루어져 있다</strong><br>
+<!-- -->HTTP 메시지는 바이너리가 아니라 문자열이다.
+따라서 서버는 들어온 데이터를
+문자 단위로 읽고 해석해야 한다.</p>
+</li>
+<li class="">
+<p><strong>요청은 순서가 있는 구조를 가진다</strong><br>
+<!-- -->요청은 크게 다음 순서로 구성된다.</p>
+<ul>
+<li class="">요청 라인 (method, URI, version)</li>
+<li class="">헤더(header)</li>
+<li class="">빈 줄</li>
+<li class="">본문(body, 선택)</li>
+</ul>
+<p>이 순서는 반드시 지켜져야 하며,
+서버는 이 구조를 기준으로 요청을 해석한다.</p>
+</li>
+<li class="">
+<p><strong>각 줄은 <code>\r\n</code>으로 끝난다</strong><br>
+<!-- -->HTTP에서 한 줄의 끝은 <code>\r\n</code>으로 구분된다.
+단순한 <code>\n</code>만으로는
+요청의 경계를 정확히 판단할 수 없다.</p>
+</li>
+<li class="">
+<p><strong>헤더의 끝은 ‘빈 줄’로 표시된다</strong><br>
+<!-- -->연속된 <code>\r\n</code> 한 번은
+헤더가 끝났음을 의미한다.
+이 지점 이후부터가 본문이다.</p>
+</li>
+<li class="">
+<p><strong>본문의 길이는 헤더 정보로 판단한다</strong><br>
+<!-- -->본문이 있는 요청의 경우,
+서버는 헤더에 포함된 정보(Content-Length 등)를 바탕으로
+어디까지 읽어야 하는지를 판단해야 한다.</p>
+</li>
+</ol>
+<p>이 규칙들 덕분에 서버는
+“언제 요청이 시작되고,
+언제 끝났는지”를
+네트워크 환경에서도 판단할 수 있다.</p>
+<p>즉, 서버는
+네트워크로 들어오는 데이터를 계속 읽으면서,
+<strong>요청이 완전히 도착했는지</strong>를
+스스로 판단해야 한다.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="응답은-어떻게-만들어지는가">응답은 어떻게 만들어지는가<a href="#응답은-어떻게-만들어지는가" class="hash-link" aria-label="Direct link to 응답은 어떻게 만들어지는가" title="Direct link to 응답은 어떻게 만들어지는가" translate="no">​</a></h2>
+<p>요청이 완성되면,
+서버는 그 내용을 바탕으로
+어떤 응답을 보낼지 결정한다.</p>
+<p>요청한 리소스가 존재하는지,
+접근이 허용되는지,
+또는 오류가 발생했는지에 따라
+응답의 내용은 달라진다.</p>
+<p>이 단계에서 서버는
+응답 상태 코드,
+헤더,
+그리고 필요한 경우 본문을 구성해
+하나의 HTTP 응답 메시지를 만든다.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="응답은-언제-어떻게-전송되는가">응답은 언제, 어떻게 전송되는가<a href="#응답은-언제-어떻게-전송되는가" class="hash-link" aria-label="Direct link to 응답은 언제, 어떻게 전송되는가" title="Direct link to 응답은 언제, 어떻게 전송되는가" translate="no">​</a></h2>
+<p>응답이 만들어졌다고 해서,
+즉시 전송할 수 있는 것은 아니다.</p>
+<p>서버는
+소켓이 데이터를 보낼 수 있는 상태인지 확인한 뒤,
+가능한 시점에 응답을 전송한다.
+응답 또한 한 번에 모두 전송되지 않을 수 있으며,
+여러 번에 나누어 보내질 수도 있다.</p>
+<p>이 과정 역시
+이벤트 루프와 상태 감시에 의해 제어된다.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="하나의-연결에서-이-과정은-반복된다">하나의 연결에서 이 과정은 반복된다<a href="#하나의-연결에서-이-과정은-반복된다" class="hash-link" aria-label="Direct link to 하나의 연결에서 이 과정은 반복된다" title="Direct link to 하나의 연결에서 이 과정은 반복된다" translate="no">​</a></h2>
+<p>하나의 연결이 유지되는 동안,
+요청과 응답의 흐름은
+여러 번 반복될 수 있다.</p>
+<p>이 때문에 서버는
+“연결 하나”를 단순한 요청 처리로 보지 않고,
+요청과 응답의 상태를 관리하는 대상으로 다룬다.
+이것이 서버에서
+클라이언트가 상태 기계처럼 동작하는 이유이다.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="이-문서에서-다루지-않는-것">이 문서에서 다루지 않는 것<a href="#이-문서에서-다루지-않는-것" class="hash-link" aria-label="Direct link to 이 문서에서 다루지 않는 것" title="Direct link to 이 문서에서 다루지 않는 것" translate="no">​</a></h2>
+<p>이 문서에서는 다음 내용을 다루지 않는다.</p>
+<ul>
+<li class="">상태 코드 목록</li>
+<li class="">CGI나 내부 처리 로직</li>
+</ul>
+<p>이 문서의 목적은
+HTTP 요청과 응답이
+<strong>어떤 흐름으로 서버를 통과하는지</strong>
+전체 그림을 이해하는 데 있다.</p></div></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/webserv_doc/docs/concepts/poll-vs-select"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">poll과 select는 무엇이 다른가</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/webserv_doc/docs/concepts/cgi-basics"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">CGI란 무엇인가</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#하나의-요청은-어디서-시작되는가" class="table-of-contents__link toc-highlight">하나의 요청은 어디서 시작되는가</a></li><li><a href="#서버에-도착한-요청은-바로-처리되지-않는다" class="table-of-contents__link toc-highlight">서버에 도착한 요청은 바로 처리되지 않는다</a></li><li><a href="#요청을-읽는다는-것의-의미" class="table-of-contents__link toc-highlight">요청을 읽는다는 것의 의미</a></li><li><a href="#요청이-완성되었다는-판단" class="table-of-contents__link toc-highlight">요청이 완성되었다는 판단</a></li><li><a href="#http의-간단한-규칙" class="table-of-contents__link toc-highlight">HTTP의 간단한 규칙</a></li><li><a href="#응답은-어떻게-만들어지는가" class="table-of-contents__link toc-highlight">응답은 어떻게 만들어지는가</a></li><li><a href="#응답은-언제-어떻게-전송되는가" class="table-of-contents__link toc-highlight">응답은 언제, 어떻게 전송되는가</a></li><li><a href="#하나의-연결에서-이-과정은-반복된다" class="table-of-contents__link toc-highlight">하나의 연결에서 이 과정은 반복된다</a></li><li><a href="#이-문서에서-다루지-않는-것" class="table-of-contents__link toc-highlight">이 문서에서 다루지 않는 것</a></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2025 webserv</div></div></div></footer></div>
+</body>
+</html>
