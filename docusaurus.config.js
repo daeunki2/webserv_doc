@@ -12,10 +12,10 @@ const config = {
   },
 
 	url: 'https://daeunki2.github.io',
-	baseUrl: '/webserv-docs/',
+	baseUrl: '/webserv_doc/',
 
 	organizationName: 'daeunki2',
-	projectName: 'webserv-docs',
+	projectName: 'webserv_doc',
 
 
   onBrokenLinks: 'throw',
@@ -65,11 +65,11 @@ const config = {
           position: 'left',
           label: 'Docs',
         },
-        {
-          href: 'https://github.com/your-github-name/webserv',
-          label: 'GitHub',
-          position: 'right',
-        },
+		{
+  			href: 'https://github.com/daeunki2/webserv',
+  			label: 'GitHub',
+  			position: 'right',
+		},
       ],
     },
     footer: {
