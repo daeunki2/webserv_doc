@@ -40,9 +40,6 @@ const config = {
           routeBasePath: '/docs',
         },
         blog: false,
-        theme: {
-          customCss: './src/css/custom.css',
-        },
       },
     ],
   ],
