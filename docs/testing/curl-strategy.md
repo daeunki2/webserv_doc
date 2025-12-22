@@ -294,13 +294,30 @@ webserv 서버의 내부 모듈(Request 파싱, 검증, 응답 생성)을
 
 ```bash
 # 기본 요청
-curl http://127.0.0.0:8181/
+curl -v http://127.0.0.0:8181/
 
 # 헤더 확인
 curl -i http://127.0.0.0:8181/
 
 # 허용되지 않은 메서드
-curl -i -X POST -H "Content-Length: 0" http://127.0.0.1:8181/
-curl -i -X DELETE http://127.0.0.0:8181/location
+curl -i -X POST -H "Content-Length: 0" http://127.0.0.0:8181/
+curl -i -X apple http://127.0.0.0:8181/
+
+# post
+echo "HELLO WEBSERV" > test.txt
+
+curl -v -X POST \
+  -F "file=@test.txt" \
+  http://127.0.0.0:8181/upload
+
+#delete
+curl -v -X DELETE \
+  http://127.0.0.0:8181/upload/test.txt
+
+# try to delete non exist file
+curl -v -X DELETE \
+  http://127.0.0.0:8181/upload/nope.txt
+
+
 
 ```
